@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { HashRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { HashRouter as Router, Switch, Route, NavLink } from 'react-router-dom';
 import { SensorInfo, SensorInfoRepository } from '../services/sensor-info';
 import { SewSensorsList } from '../sew-sensors-list';
 import { SewSensorsCRUD } from '../sew-sensors-crud';
@@ -14,21 +14,25 @@ function App() {
     return (
         <Router>
             <div className='App'>
-                <div>
-                    Alarm UI
-                    <div>
-                        <Link to='/'>Buttons</Link>
-                        <Link to='/sensors'>Sensors</Link>
-                    </div>
+                <div className='Title'>Alarm UI</div>
+                <div className='Body'>
+                    <Switch>
+                        <Route path='/sensors'>
+                            <SewSensorsCRUD sensors={sensorsInfo} onChange={saveSensorInfo} />
+                        </Route>
+                        <Route path='/'>
+                            <SewSensorsList sensors={sensorsInfo} />
+                        </Route>
+                    </Switch>
                 </div>
-                <Switch>
-                    <Route path='/sensors'>
-                        <SewSensorsCRUD sensors={sensorsInfo} onChange={saveSensorInfo} />
-                    </Route>
-                    <Route path='/'>
-                        <SewSensorsList sensors={sensorsInfo} />
-                    </Route>
-                </Switch>
+                <div className='Sections'>
+                    <NavLink to='/' exact className={'TabSection'} activeClassName='TabSectionSelected'>
+                        Buttons
+                    </NavLink>
+                    <NavLink to='/sensors' className='TabSection' activeClassName='TabSectionSelected'>
+                        Sensors
+                    </NavLink>
+                </div>
             </div>
         </Router>
     );

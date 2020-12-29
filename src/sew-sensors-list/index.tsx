@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { SensorInfo } from '../services/sensor-info';
 import { SewSwitchButton } from '../sew-switch-button';
+import './styles.css';
 
 export type SewSensorsListProps = {
     sensors?: SensorInfo[];
@@ -15,7 +16,7 @@ export const SewSensorsList: React.FC<SewSensorsListProps> = ({ sensors }) => {
         );
     }
     return (
-        <div>
+        <div className='ButtonsList'>
             {sensors.map(sensorInfo => (
                 <SewSwitchButton key={sensorInfo.sensorId} sensor={sensorInfo} />
             ))}

@@ -1,38 +1,44 @@
 .App {
-  text-align: center;
+    display: flex;
+    flex-direction: column;
+    background-color: black;
+    color: white;
+    height: 100vh;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.Title {
+    display: flex;
+    padding: 8px;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 24px;
+    background-color: firebrick;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.Body {
+    display: flex;
+    flex: 1;
+    overflow-y: scroll;
+    padding: 6px;
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.Sections {
+    display: flex;
+    background-color: gray;
 }
-
-.App-link {
-  color: #61dafb;
+.TabSection {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    margin: 2px;
+    color: white;
+    cursor: hand;
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.TabSectionSelected {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    margin: 2px;
+    padding: 16px;
+    background-color: firebrick;
+    cursor: hand;
 }
