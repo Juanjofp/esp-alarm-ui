@@ -1,0 +1,24 @@
+.ButtonSwitch {
+    display: flex;
+    flex-direction: column;
+    margin: 4px;
+    width: 180px;
+    height: 180px;
+    align-items: center;
+}
+.ButtonSwitchName {
+    display: flex;
+    color: white;
+    font-size: 18;
+    font-weight: bold;
+    padding: 6px;
+}
+.ButtonSwitchState {
+    display: flex;
+    flex: 1;
+    color: white;
+    font-size: 36px;
+    font-weight: bold;
+    align-items: center;
+    padding: 6px;
+}

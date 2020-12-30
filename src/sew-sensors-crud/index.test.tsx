@@ -11,7 +11,7 @@ test('SewSensorsCRUD should show an empty list when no sensors', async () => {
     screen.getByTestId('sew-sensors-crud-input-sensorid');
     screen.getByTestId('sew-sensors-crud-input-name');
     screen.getByTestId('sew-sensors-crud-select-type');
-    screen.getByTestId('sew-sensors-crud-input-color');
+    // screen.getByTestId('sew-sensors-crud-input-color');
     const saveButton = screen.getByTestId('sew-sensors-crud-button-save');
     expect(saveButton).toBeDisabled();
 });
@@ -21,7 +21,7 @@ test('SewSensorsCRUD should add a new Sensor to list', async () => {
         sensorId: 'sensorId',
         type: 'DISTANCE',
         name: 'Sensor 1',
-        color: 'blue'
+        color: '#DB3E00'
     };
     const updateSensorList = jest.fn();
     render(<SewSensorsCRUD sensors={[]} onChange={updateSensorList} />);
@@ -31,7 +31,7 @@ test('SewSensorsCRUD should add a new Sensor to list', async () => {
     const id = screen.getByTestId('sew-sensors-crud-input-sensorid');
     const name = screen.getByTestId('sew-sensors-crud-input-name');
     const type = screen.getByTestId('sew-sensors-crud-select-type');
-    const color = screen.getByTestId('sew-sensors-crud-input-color') as HTMLInputElement;
+    // const color = screen.getByTestId('sew-sensors-crud-input-color') as HTMLInputElement;
     const saveButton = screen.getByTestId('sew-sensors-crud-button-save');
     expect(saveButton).toBeDisabled();
 
@@ -39,8 +39,8 @@ test('SewSensorsCRUD should add a new Sensor to list', async () => {
     user.type(id, newSensorInfo.sensorId);
     user.type(name, newSensorInfo.name);
     user.selectOptions(type, newSensorInfo.type);
-    color.setSelectionRange(0, 8);
-    user.type(color, newSensorInfo.color!, { initialSelectionStart: 0, initialSelectionEnd: 8 });
+    // color.setSelectionRange(0, 8);
+    // user.type(color, newSensorInfo.color!, { initialSelectionStart: 0, initialSelectionEnd: 8 });
 
     expect(saveButton).not.toBeDisabled();
     user.click(saveButton);

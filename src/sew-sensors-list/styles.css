@@ -1,7 +1,6 @@
 .ButtonsList {
     display: flex;
-    flex-direction: column;
-    background-color: black;
-    color: white;
-    height: 100vh;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: flex-start;
 }

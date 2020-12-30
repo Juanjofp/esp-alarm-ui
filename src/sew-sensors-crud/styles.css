@@ -1,0 +1,61 @@
+.CRUDList {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: flex-start;
+}
+
+.CRUDListAdd {
+    display: flex;
+    flex-direction: column;
+    min-width: 392px;
+    margin: 4px;
+}
+.CRUDListAddField {
+    display: flex;
+    padding: 4px;
+    background-color: firebrick;
+}
+.CRUDListAddFieldLabel {
+    display: flex;
+    font-weight: bold;
+    margin-right: 15px;
+    width: 110px;
+    justify-content: flex-end;
+    align-items: center;
+}
+.CRUDListAddFieldValue {
+    flex: 1;
+    font-weight: bold;
+    max-width: 240px;
+}
+.CRUDListAddButton {
+    font-weight: bold;
+    padding: 8px;
+    color: white;
+    background-color: firebrick;
+    margin-top: 12px;
+}
+.CRUDListAddButtonDisabled {
+    font-weight: bold;
+    padding: 8px;
+    margin-top: 12px;
+}
+.CRUDListSensors {
+    display: flex;
+    flex: 1;
+    margin: 4px;
+    flex-direction: column;
+}
+.CRUDListSensorsItem {
+    display: flex;
+    flex: 1;
+    margin: 4px;
+    padding: 6px;
+}
+.CRUDListSensorsItemLabels {
+    flex: 1;
+}
+.CRUDListSensorsItemButton {
+    margin: 4px;
+}

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { SensorInfo } from '../services/sensor-info';
 import { sendActions, isActionError, ActionPayload, ActionResponse } from '../services/actionizer';
+import './styles.css';
 
 const getActionResponsePayload = (sensorId: String, defaultPayload: ActionPayload | -1, response: ActionResponse[]) => {
     for (const actionBody of response) {
@@ -44,13 +45,16 @@ export const SewSwitchButton: React.FC<SewSwitchButtonProps> = ({ sensor }) => {
     }, [runAction]);
     return (
         <button
+            className='ButtonSwitch'
             data-testid={`sew-switch-button-${sensor.sensorId}`}
             onClick={() => runAction(action.payload === 0 ? 1 : 0)}
             disabled={action.loading}
             style={{ backgroundColor: sensor.color }}
         >
-            <div>{sensor.name}</div>
-            <div>{action.loading ? 'Loading' : action.payload === 1 ? 'ON' : action.payload === -1 ? '??' : 'OFF'}</div>
+            <div className='ButtonSwitchState'>
+                {action.loading ? 'Loading' : action.payload === 1 ? 'ON' : action.payload === -1 ? '??' : 'OFF'}
+            </div>
+            <div className='ButtonSwitchName'>{sensor.name}</div>
         </button>
     );
 };

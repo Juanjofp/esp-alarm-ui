@@ -1,13 +1,16 @@
 import * as React from 'react';
 import { SensorType } from '../services/actionizer';
 import { SensorInfo } from '../services/sensor-info';
+import { GithubPicker } from 'react-color';
+import './styles.css';
 
+const defaultColors = ['firebrick', '#B80000', '#DB3E00', '#FCCB00', '#008B02', '#006B76', '#1273DE', '#004DCF', '#5300EB'];
 const sensorInfoReducer = (state: SensorInfo, action: Partial<SensorInfo>) => ({ ...state, ...action });
 const initialState: SensorInfo = {
     sensorId: '',
     name: '',
     type: 'SWITCH',
-    color: '#BA000D'
+    color: '#DB3E00'
 };
 const isSensorInfoCompleted = (sensor: SensorInfo) => {
     if (!sensor.sensorId || sensor.sensorId.length < 8) return false;
@@ -20,28 +23,31 @@ export type SewSensorsCRUDAddProps = {
 export const SewSensorsCRUDAdd: React.FC<SewSensorsCRUDAddProps> = ({ addSensor }) => {
     const [sensor, updateSensor] = React.useReducer(sensorInfoReducer, initialState);
     return (
-        <div>
-            <div>
-                <span>Sensor ID</span>
+        <div className='CRUDListAdd'>
+            <div className='CRUDListAddField'>
+                <span className='CRUDListAddFieldLabel'>Sensor ID</span>
                 <input
+                    className='CRUDListAddFieldValue'
                     type='text'
                     data-testid='sew-sensors-crud-input-sensorid'
                     onChange={ev => updateSensor({ sensorId: ev.target.value })}
                     value={sensor.sensorId}
                 />
             </div>
-            <div>
-                <span>Sensor Name</span>
+            <div className='CRUDListAddField'>
+                <span className='CRUDListAddFieldLabel'>Sensor Name</span>
                 <input
+                    className='CRUDListAddFieldValue'
                     type='text'
                     data-testid='sew-sensors-crud-input-name'
                     onChange={ev => updateSensor({ name: ev.target.value })}
                     value={sensor.name}
                 />
             </div>
-            <div>
-                <span>Sensor Type</span>
+            <div className='CRUDListAddField'>
+                <span className='CRUDListAddFieldLabel'>Sensor Type</span>
                 <select
+                    className='CRUDListAddFieldValue'
                     data-testid='sew-sensors-crud-select-type'
                     onChange={ev => updateSensor({ type: ev.target.value as SensorType })}
                     value={sensor.type}
@@ -50,16 +56,22 @@ export const SewSensorsCRUDAdd: React.FC<SewSensorsCRUDAddProps> = ({ addSensor 
                     <option value='DISTANCE'>DISTANCE</option>
                 </select>
             </div>
-            <div>
-                <span>Sensor Color</span>
-                <input
-                    type='text'
-                    data-testid='sew-sensors-crud-input-color'
-                    onChange={ev => updateSensor({ color: ev.target.value })}
-                    value={sensor.color}
+            <div className='CRUDListAddField'>
+                <span className='CRUDListAddFieldLabel'>Sensor Color</span>
+                <GithubPicker
+                    triangle='hide'
+                    colors={defaultColors}
+                    className='CRUDListAddFieldValue'
+                    color={sensor.color}
+                    onChangeComplete={color => updateSensor({ color: color.hex })}
                 />
             </div>
-            <button data-testid='sew-sensors-crud-button-save' disabled={!isSensorInfoCompleted(sensor)} onClick={() => addSensor(sensor)}>
+            <button
+                data-testid='sew-sensors-crud-button-save'
+                disabled={!isSensorInfoCompleted(sensor)}
+                onClick={() => addSensor(sensor)}
+                className={!isSensorInfoCompleted(sensor) ? 'CRUDListAddButtonDisabled' : 'CRUDListAddButton'}
+            >
                 SAVE
             </button>
         </div>
@@ -73,17 +85,29 @@ export type SewSensorsCRUDInfoListProps = {
 export const SewSensorsCRUDInfoList: React.FC<SewSensorsCRUDInfoListProps> = ({ sensors, deleteSensor }) => {
     if (!Array.isArray(sensors) || sensors.length < 1) {
         return (
-            <div>
+            <div className='CRUDListNoSensors'>
                 <div>No Sensors found!</div>
             </div>
         );
     }
     return (
-        <div>
+        <div className='CRUDListSensors'>
             {sensors.map((sensorInfo, index) => (
-                <div key={sensorInfo.sensorId} data-testid={`sew-sensors-crud-list-${sensorInfo.sensorId}`}>
-                    <div>{sensorInfo.name}</div>
-                    <button data-testid={`sew-sensors-crud-button-delete`} onClick={() => deleteSensor(index)}>
+                <div
+                    key={sensorInfo.sensorId}
+                    data-testid={`sew-sensors-crud-list-${sensorInfo.sensorId}`}
+                    className='CRUDListSensorsItem'
+                    style={{ backgroundColor: sensorInfo.color }}
+                >
+                    <div className='CRUDListSensorsItemLabels'>
+                        <div>{sensorInfo.name}</div>
+                        <div>{sensorInfo.sensorId}</div>
+                    </div>
+                    <button
+                        data-testid={`sew-sensors-crud-button-delete`}
+                        onClick={() => deleteSensor(index)}
+                        className='CRUDListSensorsItemButton'
+                    >
                         DELETE
                     </button>
                 </div>
@@ -98,7 +122,7 @@ export type SewSensorsCRUDProps = {
 };
 export const SewSensorsCRUD: React.FC<SewSensorsCRUDProps> = ({ sensors = [], onChange }) => {
     return (
-        <div>
+        <div className='CRUDList'>
             <SewSensorsCRUDAdd addSensor={sensor => onChange([...sensors, sensor])} />
             <SewSensorsCRUDInfoList
                 sensors={sensors}
