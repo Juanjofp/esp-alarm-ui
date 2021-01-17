@@ -5,7 +5,7 @@ beforeEach(() => {
 });
 
 test('SensorInfo.load should return all sensors from local storage', () => {
-    const savedData = [{ sensorId: 'mysensorid', type: 'SWITCH', name: 'Juanjo Rojo' }];
+    const savedData = [{ deviceId: 'deviceid', sensorId: 'mysensorid', type: 'SWITCH', name: 'Juanjo Rojo' }];
     window.localStorage.setItem('sensor-info', JSON.stringify(savedData));
 
     const sensorInfoData = SensorInfoRepository.load();
@@ -68,8 +68,8 @@ test('SensorInfo.save should return false when invalid array', () => {
 
 test('SensorInfo.save should return true when valid array', () => {
     const sensorsInfo: SensorInfo[] = [
-        { sensorId: 'sensorId', type: 'SWITCH', name: 'Juanjo Rojo' },
-        { sensorId: 'sensorId', type: 'SWITCH', name: 'Juanjo Azul' }
+        { deviceId: 'deviceid', sensorId: 'sensorId', type: 'SWITCH', name: 'Juanjo Rojo' },
+        { deviceId: 'deviceid', sensorId: 'sensorId', type: 'SWITCH', name: 'Juanjo Azul' }
     ];
     const saved = SensorInfoRepository.save(sensorsInfo);
 

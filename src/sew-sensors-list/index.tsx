@@ -3,6 +3,14 @@ import { SensorInfo } from '../services/sensor-info';
 import { SewSwitchButton } from '../sew-switch-button';
 import './styles.css';
 
+const NoView: React.FC<{ sensor: SensorInfo }> = ({ sensor }) => (
+    <div className='NoView'>
+        {sensor.type} - {sensor.sensorId}
+    </div>
+);
+const SensorsView: { [key: string]: React.FC<any> } = {
+    SWITCH: SewSwitchButton
+};
 export type SewSensorsListProps = {
     sensors?: SensorInfo[];
 };
@@ -17,9 +25,10 @@ export const SewSensorsList: React.FC<SewSensorsListProps> = ({ sensors }) => {
     }
     return (
         <div className='ButtonsList'>
-            {sensors.map(sensorInfo => (
-                <SewSwitchButton key={sensorInfo.sensorId} sensor={sensorInfo} />
-            ))}
+            {sensors.map(sensorInfo => {
+                const Component = SensorsView[sensorInfo.type] ? SensorsView[sensorInfo.type] : NoView;
+                return <Component key={sensorInfo.sensorId} sensor={sensorInfo} />;
+            })}
         </div>
     );
 };

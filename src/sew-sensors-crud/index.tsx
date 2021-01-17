@@ -7,12 +7,14 @@ import './styles.css';
 const defaultColors = ['firebrick', '#B80000', '#DB3E00', '#FCCB00', '#008B02', '#006B76', '#1273DE', '#004DCF', '#5300EB'];
 const sensorInfoReducer = (state: SensorInfo, action: Partial<SensorInfo>) => ({ ...state, ...action });
 const initialState: SensorInfo = {
+    deviceId: '',
     sensorId: '',
     name: '',
     type: 'SWITCH',
     color: '#DB3E00'
 };
 const isSensorInfoCompleted = (sensor: SensorInfo) => {
+    if (!sensor.deviceId || sensor.deviceId.length < 6) return false;
     if (!sensor.sensorId || sensor.sensorId.length < 8) return false;
     if (!sensor.name || sensor.name.length < 3) return false;
     return true;
@@ -24,6 +26,16 @@ export const SewSensorsCRUDAdd: React.FC<SewSensorsCRUDAddProps> = ({ addSensor 
     const [sensor, updateSensor] = React.useReducer(sensorInfoReducer, initialState);
     return (
         <div className='CRUDListAdd'>
+            <div className='CRUDListAddField'>
+                <span className='CRUDListAddFieldLabel'>Device ID</span>
+                <input
+                    className='CRUDListAddFieldValue'
+                    type='text'
+                    data-testid='sew-sensors-crud-input-deviceid'
+                    onChange={ev => updateSensor({ deviceId: ev.target.value })}
+                    value={sensor.deviceId}
+                />
+            </div>
             <div className='CRUDListAddField'>
                 <span className='CRUDListAddFieldLabel'>Sensor ID</span>
                 <input
@@ -53,6 +65,7 @@ export const SewSensorsCRUDAdd: React.FC<SewSensorsCRUDAddProps> = ({ addSensor 
                     value={sensor.type}
                 >
                     <option value='SWITCH'>SWITCH</option>
+                    <option value='DCMOTOR'>DCMOTOR</option>
                     <option value='DISTANCE'>DISTANCE</option>
                 </select>
             </div>
@@ -101,6 +114,7 @@ export const SewSensorsCRUDInfoList: React.FC<SewSensorsCRUDInfoListProps> = ({ 
                 >
                     <div className='CRUDListSensorsItemLabels'>
                         <div>{sensorInfo.name}</div>
+                        <div>{sensorInfo.deviceId}</div>
                         <div>{sensorInfo.sensorId}</div>
                     </div>
                     <button

@@ -2,6 +2,7 @@ import { SensorId, SensorType } from './actionizer';
 
 const validateSensorInfo = (sensorInfo: SensorInfo) => {
     if (!sensorInfo || typeof sensorInfo !== 'object') return false;
+    if (typeof sensorInfo['deviceId'] !== 'string') return false;
     if (typeof sensorInfo['sensorId'] !== 'string') return false;
     if (typeof sensorInfo['type'] !== 'string') return false;
     if (typeof sensorInfo['name'] !== 'string') return false;
@@ -9,11 +10,13 @@ const validateSensorInfo = (sensorInfo: SensorInfo) => {
 };
 
 export type SensorInfo = {
+    deviceId: string;
     sensorId: SensorId;
     type: SensorType;
     name: string;
     color?: string;
 };
+
 export const SensorInfoRepository = {
     load: (): SensorInfo[] => {
         const strData = window.localStorage.getItem('sensor-info');

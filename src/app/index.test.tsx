@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen, within } from '@testing-library/react';
 import user from '@testing-library/user-event';
 import App from './';
-import { sendActions, isActionError, ActionBody } from '../services/actionizer';
+import { sendActions, isActionError, Device } from '../services/actionizer';
 
 beforeEach(() => localStorage.clear());
 
@@ -14,13 +14,13 @@ test('renders App without crash', async () => {
     localStorage.setItem(
         'sensor-info',
         JSON.stringify([
-            { sensorId: '123456789', name: 'Sensor 1', type: 'SWITCH', color: '#ABC' },
-            { sensorId: '123456788', name: 'Sensor 2', type: 'SWITCH', color: '#AAA' },
-            { sensorId: '123456787', name: 'Sensor 3', type: 'SWITCH', color: '#0F5' }
+            { deviceId: 'deviceid', sensorId: '123456789', name: 'Sensor 1', type: 'SWITCH', color: '#ABC' },
+            { deviceId: 'deviceid', sensorId: '123456788', name: 'Sensor 2', type: 'SWITCH', color: '#AAA' },
+            { deviceId: 'deviceid', sensorId: '123456787', name: 'Sensor 3', type: 'SWITCH', color: '#0F5' }
         ])
     );
-    fakeSendActions.mockImplementation((action: ActionBody) => {
-        return Promise.resolve([{ action, status: 200 }]);
+    fakeSendActions.mockImplementation((action: Device) => {
+        return Promise.resolve([{ actionIndex: 0, status: 200 }]);
     });
     fakeIsActionError.mockReturnValue(false);
 
@@ -34,8 +34,8 @@ test('renders App without crash', async () => {
 });
 
 test('renders App empty without crash', async () => {
-    fakeSendActions.mockImplementation((action: ActionBody) => {
-        return Promise.resolve([{ action, status: 200 }]);
+    fakeSendActions.mockImplementation((action: Device) => {
+        return Promise.resolve([{ actionIndex: 0, status: 200 }]);
     });
     fakeIsActionError.mockReturnValue(false);
 
@@ -50,13 +50,13 @@ test('renders App empty without crash', async () => {
 
 test('renders App and navigate to sensors', async () => {
     const initialSensors = [
-        { sensorId: '123456789', name: 'Sensor 1', type: 'SWITCH', color: '#ABC' },
-        { sensorId: '123456788', name: 'Sensor 2', type: 'SWITCH', color: '#AAA' },
-        { sensorId: '123456787', name: 'Sensor 3', type: 'SWITCH', color: '#0F5' }
+        { deviceId: 'deviceid', sensorId: '123456789', name: 'Sensor 1', type: 'SWITCH', color: '#ABC' },
+        { deviceId: 'deviceid', sensorId: '123456788', name: 'Sensor 2', type: 'SWITCH', color: '#AAA' },
+        { deviceId: 'deviceid', sensorId: '123456787', name: 'Sensor 3', type: 'SWITCH', color: '#0F5' }
     ];
     localStorage.setItem('sensor-info', JSON.stringify(initialSensors));
-    fakeSendActions.mockImplementation((action: ActionBody) => {
-        return Promise.resolve([{ action, status: 200 }]);
+    fakeSendActions.mockImplementation((action: Device) => {
+        return Promise.resolve([{ actionIndex: 0, status: 200 }]);
     });
     fakeIsActionError.mockReturnValue(false);
 

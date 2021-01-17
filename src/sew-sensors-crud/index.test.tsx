@@ -8,6 +8,7 @@ test('SewSensorsCRUD should show an empty list when no sensors', async () => {
     screen.getByText(/No sensors found!/i);
 
     // Create new Sensor panel
+    screen.getByTestId('sew-sensors-crud-input-deviceid');
     screen.getByTestId('sew-sensors-crud-input-sensorid');
     screen.getByTestId('sew-sensors-crud-input-name');
     screen.getByTestId('sew-sensors-crud-select-type');
@@ -18,6 +19,7 @@ test('SewSensorsCRUD should show an empty list when no sensors', async () => {
 
 test('SewSensorsCRUD should add a new Sensor to list', async () => {
     const newSensorInfo: SensorInfo = {
+        deviceId: 'deviceId',
         sensorId: 'sensorId',
         type: 'DISTANCE',
         name: 'Sensor 1',
@@ -28,6 +30,7 @@ test('SewSensorsCRUD should add a new Sensor to list', async () => {
     screen.getByText(/No sensors found!/i);
 
     // Create new Sensor panel
+    const device = screen.getByTestId('sew-sensors-crud-input-deviceid');
     const id = screen.getByTestId('sew-sensors-crud-input-sensorid');
     const name = screen.getByTestId('sew-sensors-crud-input-name');
     const type = screen.getByTestId('sew-sensors-crud-select-type');
@@ -36,6 +39,7 @@ test('SewSensorsCRUD should add a new Sensor to list', async () => {
     expect(saveButton).toBeDisabled();
 
     // Add values
+    user.type(device, newSensorInfo.deviceId);
     user.type(id, newSensorInfo.sensorId);
     user.type(name, newSensorInfo.name);
     user.selectOptions(type, newSensorInfo.type);
@@ -50,9 +54,9 @@ test('SewSensorsCRUD should add a new Sensor to list', async () => {
 
 test('SewSensorsList should show 3 SewSwitchButtons from sensors list and delete Sensor 2', async () => {
     const sensors: SensorInfo[] = [
-        { sensorId: '123456789', name: 'Sensor 1', type: 'SWITCH', color: '#ABC' },
-        { sensorId: '123456788', name: 'Sensor 2', type: 'SWITCH', color: '#AAA' },
-        { sensorId: '123456787', name: 'Sensor 3', type: 'SWITCH', color: '#0F5' }
+        { deviceId: 'deviceid', sensorId: '123456789', name: 'Sensor 1', type: 'SWITCH', color: '#ABC' },
+        { deviceId: 'deviceid', sensorId: '123456788', name: 'Sensor 2', type: 'SWITCH', color: '#AAA' },
+        { deviceId: 'deviceid', sensorId: '123456787', name: 'Sensor 3', type: 'SWITCH', color: '#0F5' }
     ];
     const updateSensorList = jest.fn();
     render(<SewSensorsCRUD sensors={sensors} onChange={updateSensorList} />);

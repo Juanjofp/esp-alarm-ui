@@ -1,14 +1,7 @@
 import * as React from 'react';
 import { SensorInfo } from '../services/sensor-info';
-import { sendActions, isActionError, ActionPayload, ActionResponse } from '../services/actionizer';
+import { sendActions, isActionError, ActionPayload } from '../services/actionizer';
 import './styles.css';
-
-const getActionResponsePayload = (sensorId: String, defaultPayload: ActionPayload | -1, response: ActionResponse[]) => {
-    for (const actionBody of response) {
-        if (actionBody.action.sensorId === sensorId && actionBody.status === 200) return actionBody.action.payload;
-    }
-    return -1;
-};
 
 export type SewSwitchButtonProps = {
     sensor: SensorInfo;
@@ -24,9 +17,12 @@ export const SewSwitchButton: React.FC<SewSwitchButtonProps> = ({ sensor }) => {
         async (payload: ActionPayload) => {
             try {
                 setAction(action => ({ ...action, loading: true }));
-                const response = await sendActions({ sensorId: sensor.sensorId, type: sensor.type, payload });
+                const response = await sendActions({
+                    deviceId: sensor.deviceId,
+                    actions: [{ sensorId: sensor.sensorId, type: sensor.type, payload }]
+                });
                 setAction(action => ({
-                    payload: isActionError(response) ? -1 : getActionResponsePayload(sensor.sensorId, action.payload, response),
+                    payload: isActionError(response) ? -1 : payload,
                     loading: false
                 }));
             } catch (error) {

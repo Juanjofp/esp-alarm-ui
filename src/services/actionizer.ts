@@ -4,27 +4,31 @@ export type SensorId = string;
 export type SensorType = 'SWITCH' | 'DISTANCE';
 export type SwitchValues = 0 | 1;
 export type ActionPayload = SwitchValues;
-export type ActionBody = {
+export type Action = {
     sensorId: SensorId;
     type: SensorType;
     payload: ActionPayload;
 };
+export type Device = {
+    deviceId: string;
+    actions: Action[];
+};
 
-export type ActionResponse = { action: ActionBody & { tenantId: string }; status: number };
-export type ActionErrorResponse = { errorCode: number };
-export const isActionError = (response: ActionResponse[] | ActionErrorResponse): response is ActionErrorResponse => {
-    if (!!(response as ActionErrorResponse).errorCode) return true;
+export type ActionizerResponse = { actionIndex: number; status: number };
+export type ActionizerErrorResponse = { errorCode: number };
+export const isActionError = (response: ActionizerResponse[] | ActionizerErrorResponse): response is ActionizerErrorResponse => {
+    if (!!(response as ActionizerErrorResponse).errorCode) return true;
     return false;
 };
 
-export async function sendActions(actions: ActionBody | ActionBody[]): Promise<ActionResponse[] | ActionErrorResponse> {
-    const body = Array.isArray(actions) ? actions : [actions];
+export async function sendActions(devices: Device | Device[]): Promise<ActionizerResponse[] | ActionizerErrorResponse> {
+    const body = Array.isArray(devices) ? devices : [devices];
     if (body.length < 1) return [];
     const response = await fetch(ACTIONEIZER_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body)
     });
-    if (response.status === 200) return response.json();
+    if (response.status === 200 || response.status === 202) return response.json();
     return { errorCode: response.status };
 }

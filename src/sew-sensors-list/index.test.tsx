@@ -2,7 +2,7 @@ import { screen, render, waitFor } from '@testing-library/react';
 import user from '@testing-library/user-event';
 import { SensorInfo } from '../services/sensor-info';
 import { SewSensorsList } from './';
-import { sendActions, isActionError, ActionBody } from '../services/actionizer';
+import { sendActions, isActionError, Device } from '../services/actionizer';
 
 const fakeSendActions = (sendActions as unknown) as jest.Mock;
 const fakeIsActionError = (isActionError as unknown) as jest.Mock;
@@ -22,14 +22,14 @@ test('SewSensorsList should show a link to CRUD when no sensors availables', asy
     await screen.findByText(/Add sensors/i);
 });
 
-test('SewSensorsList should show 3 SewSwitchButtons from sensors list', async () => {
+test('SewSensorsList should show 3 SewSwitchButtons from a device', async () => {
     const sensors: SensorInfo[] = [
-        { sensorId: '123456789', name: 'Sensor 1', type: 'SWITCH', color: '#ABC' },
-        { sensorId: '123456788', name: 'Sensor 2', type: 'SWITCH', color: '#AAA' },
-        { sensorId: '123456787', name: 'Sensor 3', type: 'SWITCH', color: '#0F5' }
+        { deviceId: 'deviceid', sensorId: '123456789', name: 'Sensor 1', type: 'SWITCH', color: '#ABC' },
+        { deviceId: 'deviceid', sensorId: '123456788', name: 'Sensor 2', type: 'SWITCH', color: '#AAA' },
+        { deviceId: 'deviceid', sensorId: '123456787', name: 'Sensor 3', type: 'SWITCH', color: '#0F5' }
     ];
-    fakeSendActions.mockImplementation((action: ActionBody) => {
-        return Promise.resolve([{ action, status: 200 }]);
+    fakeSendActions.mockImplementation((device: Device) => {
+        return Promise.resolve([{ actionIndex: 0, status: 200 }]);
     });
     fakeIsActionError.mockReturnValue(false);
 
@@ -43,7 +43,10 @@ test('SewSensorsList should show 3 SewSwitchButtons from sensors list', async ()
         screen.getByText(sensors[i].name);
         expect(buttons[i]).toHaveTextContent(/OFF/);
         expect(fakeSendActions).toHaveBeenCalledTimes(3);
-        expect(fakeSendActions).toHaveBeenNthCalledWith(i + 1, { payload: 0, sensorId: sensors[i].sensorId, type: 'SWITCH' });
+        expect(fakeSendActions).toHaveBeenNthCalledWith(i + 1, {
+            deviceId: 'deviceid',
+            actions: [{ payload: 0, sensorId: sensors[i].sensorId, type: 'SWITCH' }]
+        });
     }
 
     // Turn ON all buttons
@@ -54,7 +57,10 @@ test('SewSensorsList should show 3 SewSwitchButtons from sensors list', async ()
         screen.getByText(sensors[i].name);
         expect(buttons[i]).toHaveTextContent(/ON/);
         expect(fakeSendActions).toHaveBeenCalledTimes(1);
-        expect(fakeSendActions).toHaveBeenNthCalledWith(1, { payload: 1, sensorId: sensors[i].sensorId, type: 'SWITCH' });
+        expect(fakeSendActions).toHaveBeenNthCalledWith(1, {
+            deviceId: 'deviceid',
+            actions: [{ payload: 1, sensorId: sensors[i].sensorId, type: 'SWITCH' }]
+        });
     }
 
     // Turn OFF all buttons
@@ -65,6 +71,9 @@ test('SewSensorsList should show 3 SewSwitchButtons from sensors list', async ()
         screen.getByText(sensors[i].name);
         expect(buttons[i]).toHaveTextContent(/OFF/);
         expect(fakeSendActions).toHaveBeenCalledTimes(1);
-        expect(fakeSendActions).toHaveBeenNthCalledWith(1, { payload: 0, sensorId: sensors[i].sensorId, type: 'SWITCH' });
+        expect(fakeSendActions).toHaveBeenNthCalledWith(1, {
+            deviceId: 'deviceid',
+            actions: [{ payload: 0, sensorId: sensors[i].sensorId, type: 'SWITCH' }]
+        });
     }
 });
