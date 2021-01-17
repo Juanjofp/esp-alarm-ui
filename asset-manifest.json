@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/esp-alarm-ui/static/css/main.6df4b6e7.chunk.css",
-    "main.js": "/esp-alarm-ui/static/js/main.4662e33e.chunk.js",
-    "main.js.map": "/esp-alarm-ui/static/js/main.4662e33e.chunk.js.map",
+    "main.css": "/esp-alarm-ui/static/css/main.a0f5be4f.chunk.css",
+    "main.js": "/esp-alarm-ui/static/js/main.8818b391.chunk.js",
+    "main.js.map": "/esp-alarm-ui/static/js/main.8818b391.chunk.js.map",
     "runtime-main.js": "/esp-alarm-ui/static/js/runtime-main.f2b90177.js",
     "runtime-main.js.map": "/esp-alarm-ui/static/js/runtime-main.f2b90177.js.map",
-    "static/js/2.88d972ce.chunk.js": "/esp-alarm-ui/static/js/2.88d972ce.chunk.js",
-    "static/js/2.88d972ce.chunk.js.map": "/esp-alarm-ui/static/js/2.88d972ce.chunk.js.map",
+    "static/js/2.36cb8602.chunk.js": "/esp-alarm-ui/static/js/2.36cb8602.chunk.js",
+    "static/js/2.36cb8602.chunk.js.map": "/esp-alarm-ui/static/js/2.36cb8602.chunk.js.map",
     "static/js/3.d733d060.chunk.js": "/esp-alarm-ui/static/js/3.d733d060.chunk.js",
     "static/js/3.d733d060.chunk.js.map": "/esp-alarm-ui/static/js/3.d733d060.chunk.js.map",
     "index.html": "/esp-alarm-ui/index.html",
-    "static/css/main.6df4b6e7.chunk.css.map": "/esp-alarm-ui/static/css/main.6df4b6e7.chunk.css.map",
-    "static/js/2.88d972ce.chunk.js.LICENSE.txt": "/esp-alarm-ui/static/js/2.88d972ce.chunk.js.LICENSE.txt"
+    "static/css/main.a0f5be4f.chunk.css.map": "/esp-alarm-ui/static/css/main.a0f5be4f.chunk.css.map",
+    "static/js/2.36cb8602.chunk.js.LICENSE.txt": "/esp-alarm-ui/static/js/2.36cb8602.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.f2b90177.js",
-    "static/js/2.88d972ce.chunk.js",
-    "static/css/main.6df4b6e7.chunk.css",
-    "static/js/main.4662e33e.chunk.js"
+    "static/js/2.36cb8602.chunk.js",
+    "static/css/main.a0f5be4f.chunk.css",
+    "static/js/main.8818b391.chunk.js"
   ]
 }
