@@ -38,3 +38,30 @@ export const SensorInfoRepository = {
         return true;
     }
 };
+
+export type SewCarInfo = {
+    deviceId: string;
+    motorLeft: SensorId;
+    motorRight: SensorId;
+};
+export const SewCarInfoRepository = {
+    load: (): SewCarInfo | null => {
+        const strData = window.localStorage.getItem('sewcar-info');
+        if (!strData) return null;
+        try {
+            const repo = JSON.parse(strData);
+            return repo;
+        } catch (err) {
+            console.log('Error parsing data', err);
+            return null;
+        }
+    },
+    save: (sewCarInfo: SewCarInfo) => {
+        if (!sewCarInfo || !sewCarInfo.deviceId || !sewCarInfo.motorLeft || !sewCarInfo.motorRight) return false;
+        window.localStorage.setItem('sewcar-info', JSON.stringify(sewCarInfo));
+        return true;
+    },
+    delete: () => {
+        window.localStorage.removeItem('sewcar-info');
+    }
+};

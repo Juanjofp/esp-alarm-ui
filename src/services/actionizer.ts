@@ -1,9 +1,10 @@
 import { ACTIONEIZER_URL } from '../config';
 
 export type SensorId = string;
-export type SensorType = 'SWITCH' | 'DISTANCE';
+export type SensorType = 'SWITCH' | 'DISTANCE' | 'DCMOTOR';
 export type SwitchValues = 0 | 1;
-export type ActionPayload = SwitchValues;
+export type DCMotorValues = { enabled: boolean; reverse: boolean; power: number };
+export type ActionPayload = SwitchValues | DCMotorValues;
 export type Action = {
     sensorId: SensorId;
     type: SensorType;

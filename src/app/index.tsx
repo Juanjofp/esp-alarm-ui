@@ -3,6 +3,7 @@ import { HashRouter as Router, Switch, Route, NavLink } from 'react-router-dom';
 import { SensorInfo, SensorInfoRepository } from '../services/sensor-info';
 import { SewSensorsList } from '../sew-sensors-list';
 import { SewSensorsCRUD } from '../sew-sensors-crud';
+import { SewCar } from '../sewcar';
 import './styles.css';
 
 function App() {
@@ -17,6 +18,9 @@ function App() {
                 <div className='Title'>Alarm UI</div>
                 <div className='Body'>
                     <Switch>
+                        <Route path='/sewcar'>
+                            <SewCar />
+                        </Route>
                         <Route path='/sensors'>
                             <SewSensorsCRUD sensors={sensorsInfo} onChange={saveSensorInfo} />
                         </Route>
@@ -31,6 +35,9 @@ function App() {
                     </NavLink>
                     <NavLink to='/sensors' className='TabSection' activeClassName='TabSectionSelected'>
                         Sensors
+                    </NavLink>
+                    <NavLink to='/sewcar' className='TabSection' activeClassName='TabSectionSelected'>
+                        SewCar
                     </NavLink>
                 </div>
             </div>

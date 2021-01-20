@@ -21,7 +21,7 @@ test('sendAction should return an error when body is null', async () => {
 
     expect(actionizerResponse).toEqual({ errorCode: 500 });
     expect(fakeFetch).toHaveBeenCalledTimes(1);
-    expect(fakeFetch).toHaveBeenNthCalledWith(1, 'https://actionizer.sew.ovh', {
+    expect(fakeFetch).toHaveBeenNthCalledWith(1, 'https://actionizer.sew', {
         body: '[null]',
         headers: { 'Content-Type': 'application/json' },
         method: 'POST'
