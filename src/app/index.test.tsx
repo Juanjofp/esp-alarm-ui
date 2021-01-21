@@ -114,3 +114,32 @@ test('renders App and navigate to sewcar', async () => {
     const newButtons = await screen.findAllByTestId(/sew-switch-button-/i);
     expect(newButtons.length).toBe(3);
 });
+
+test('renders App and navigate to sewtank', async () => {
+    const initialSensors = [
+        { deviceId: 'deviceid', sensorId: '123456789', name: 'Sensor 1', type: 'SWITCH', color: '#ABC' },
+        { deviceId: 'deviceid', sensorId: '123456788', name: 'Sensor 2', type: 'SWITCH', color: '#AAA' },
+        { deviceId: 'deviceid', sensorId: '123456787', name: 'Sensor 3', type: 'SWITCH', color: '#0F5' }
+    ];
+    localStorage.setItem('sensor-info', JSON.stringify(initialSensors));
+    fakeSendActions.mockImplementation((action: Device) => {
+        return Promise.resolve([{ actionIndex: 0, status: 200 }]);
+    });
+    fakeIsActionError.mockReturnValue(false);
+
+    render(<App />);
+    const title = screen.getByText(/Alarm UI/i);
+    expect(title).toBeInTheDocument();
+    expect(screen.queryByText(/Add sensors/i)).not.toBeInTheDocument();
+    const buttons = await screen.findAllByTestId(/sew-switch-button-/i);
+    expect(buttons.length).toBe(3);
+
+    // Navigate to Sensors
+    user.click(screen.getByText(/sewtank/i));
+    await screen.findByTestId(/sewtank-container/);
+
+    // Return to home state
+    user.click(screen.getByText(/buttons/i));
+    const newButtons = await screen.findAllByTestId(/sew-switch-button-/i);
+    expect(newButtons.length).toBe(3);
+});
