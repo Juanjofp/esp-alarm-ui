@@ -82,7 +82,7 @@ export const SewCarPad: React.FC<SewCarPadProps> = ({ sewCar }) => {
     const [pressed, setPressed] = React.useState('np');
     return (
         <div className='SewCarContainer' data-testid='sewcar-pad-container'>
-            <div className='SewCarTitle'>SewCar GamePad</div>
+            <div className='SewCarTitle'>SewCar</div>
             <div
                 className='SewCarPad'
                 onContextMenu={event => {
@@ -156,7 +156,7 @@ export const SewCarPad: React.FC<SewCarPadProps> = ({ sewCar }) => {
                     >
                         <img src={IMG_UP} alt='forward' style={{ transform: 'rotate(-90deg)' }} />
                     </div>
-                    <div className='SewCarPowerValue'>{power}</div>
+                    <div className='SewCarPowerValue'>{Math.round((power * 100) / 255)}%</div>
                     <div
                         data-testid='sewcar-pad-button-right'
                         className={pressed === 'rg' ? 'SewCarActiveButton' : 'SewCarButton'}
